@@ -1,23 +1,47 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const syncNotes = /* GraphQL */ `
-  query SyncNotes(
-    $filter: ModelNoteFilterInput
+export const getNews = /* GraphQL */ `
+  query GetNews($id: ID!) {
+    getNews(id: $id) {
+      id
+      title
+      titleFR
+      img
+      author
+      date
+      content
+      contentFR
+      type
+      typeFR
+      nbComments
+      _version
+      _deleted
+      _lastChangedAt
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listNewss = /* GraphQL */ `
+  query ListNewss(
+    $filter: ModelNewsFilterInput
     $limit: Int
     $nextToken: String
-    $lastSync: AWSTimestamp
   ) {
-    syncNotes(
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      lastSync: $lastSync
-    ) {
+    listNewss(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        name
-        description
+        title
+        titleFR
+        img
+        author
+        date
+        content
+        contentFR
+        type
+        typeFR
+        nbComments
         _version
         _deleted
         _lastChangedAt
@@ -29,31 +53,31 @@ export const syncNotes = /* GraphQL */ `
     }
   }
 `;
-export const getNote = /* GraphQL */ `
-  query GetNote($id: ID!) {
-    getNote(id: $id) {
-      id
-      name
-      description
-      _version
-      _deleted
-      _lastChangedAt
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listNotes = /* GraphQL */ `
-  query ListNotes(
-    $filter: ModelNoteFilterInput
+export const syncNews = /* GraphQL */ `
+  query SyncNews(
+    $filter: ModelNewsFilterInput
     $limit: Int
     $nextToken: String
+    $lastSync: AWSTimestamp
   ) {
-    listNotes(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    syncNews(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      lastSync: $lastSync
+    ) {
       items {
         id
-        name
-        description
+        title
+        titleFR
+        img
+        author
+        date
+        content
+        contentFR
+        type
+        typeFR
+        nbComments
         _version
         _deleted
         _lastChangedAt

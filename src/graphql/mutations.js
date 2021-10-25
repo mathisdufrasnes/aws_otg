@@ -1,15 +1,23 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createNote = /* GraphQL */ `
-  mutation CreateNote(
-    $input: CreateNoteInput!
-    $condition: ModelNoteConditionInput
+export const createNews = /* GraphQL */ `
+  mutation CreateNews(
+    $input: CreateNewsInput!
+    $condition: ModelNewsConditionInput
   ) {
-    createNote(input: $input, condition: $condition) {
+    createNews(input: $input, condition: $condition) {
       id
-      name
-      description
+      title
+      titleFR
+      img
+      author
+      date
+      content
+      contentFR
+      type
+      typeFR
+      nbComments
       _version
       _deleted
       _lastChangedAt
@@ -18,15 +26,23 @@ export const createNote = /* GraphQL */ `
     }
   }
 `;
-export const updateNote = /* GraphQL */ `
-  mutation UpdateNote(
-    $input: UpdateNoteInput!
-    $condition: ModelNoteConditionInput
+export const updateNews = /* GraphQL */ `
+  mutation UpdateNews(
+    $input: UpdateNewsInput!
+    $condition: ModelNewsConditionInput
   ) {
-    updateNote(input: $input, condition: $condition) {
+    updateNews(input: $input, condition: $condition) {
       id
-      name
-      description
+      title
+      titleFR
+      img
+      author
+      date
+      content
+      contentFR
+      type
+      typeFR
+      nbComments
       _version
       _deleted
       _lastChangedAt
@@ -35,15 +51,23 @@ export const updateNote = /* GraphQL */ `
     }
   }
 `;
-export const deleteNote = /* GraphQL */ `
-  mutation DeleteNote(
-    $input: DeleteNoteInput!
-    $condition: ModelNoteConditionInput
+export const deleteNews = /* GraphQL */ `
+  mutation DeleteNews(
+    $input: DeleteNewsInput!
+    $condition: ModelNewsConditionInput
   ) {
-    deleteNote(input: $input, condition: $condition) {
+    deleteNews(input: $input, condition: $condition) {
       id
-      name
-      description
+      title
+      titleFR
+      img
+      author
+      date
+      content
+      contentFR
+      type
+      typeFR
+      nbComments
       _version
       _deleted
       _lastChangedAt

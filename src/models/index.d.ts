@@ -12,6 +12,14 @@ export declare class News {
   readonly id: string;
   readonly title: string;
   readonly titleFR: string;
+  readonly img?: string;
+  readonly author: string;
+  readonly date?: string;
+  readonly content?: string;
+  readonly contentFR?: string;
+  readonly type?: string;
+  readonly typeFR?: string;
+  readonly nbComments?: number;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<News, NewsMetaData>);

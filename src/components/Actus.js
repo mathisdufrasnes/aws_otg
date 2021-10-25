@@ -10,6 +10,8 @@ import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined';
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
+import { DataStore } from '@aws-amplify/datastore';
+import { News } from '../models';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
 import TimelineContent from '@mui/lab/TimelineContent';
@@ -238,6 +240,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Actus() {
     const [offset, setOffset] = useState(0);
+
+
+    const [actualites, setActualites] = useState([]);
+    useEffect(() => {
+        fetchNews();
+    }, []);
+
+    async function fetchNews() {
+        const news = await DataStore.query(News);
+        setActualites(news);
+    }
 
 
     const history = useHistory();
