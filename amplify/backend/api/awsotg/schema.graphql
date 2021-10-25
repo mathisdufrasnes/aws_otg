@@ -1,10 +1,5 @@
-type Nouvelle @model @auth(rules: [{allow: public}]) {
+type Note @model {
   id: ID!
-  title: String!
-  titleFR: String
-  picture: String
-  author: String
-  date: AWSDateTime
-  content: String
-  contentFR: String
+  name: String!
+  description: String
 }
