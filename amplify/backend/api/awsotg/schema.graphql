@@ -1,0 +1,10 @@
+type Nouvelle @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  title: String!
+  titleFR: String
+  picture: String
+  author: String
+  date: AWSDateTime
+  content: String
+  contentFR: String
+}
