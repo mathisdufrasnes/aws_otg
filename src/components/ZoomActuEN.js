@@ -5,10 +5,10 @@ import {Box, Grid} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import {useHistory, useParams} from "react-router-dom";
 import imgActu1 from "../media/actu1.png";
-import imgActu4 from "../media/actu4.jpg";
-import imgActu5 from "../media/actu5.png";
-import imgActu6 from "../media/actu6.png";
-import imgActu7 from "../media/actu7.png";
+import imgActu4 from "../media/actu2.jpg";
+import imgActu5 from "../media/actu3.png";
+import imgActu6 from "../media/actu4.png";
+import imgActu7 from "../media/actu5.png";
 
 
 const useStyles = makeStyles((theme) => ({

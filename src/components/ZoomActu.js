@@ -1,14 +1,17 @@
-import React, {Fragment} from "react"
+import React, {Fragment, useEffect, useState} from "react"
 
 import {makeStyles} from "@material-ui/core/styles"
 import {Box, Grid} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import {useHistory, useParams} from "react-router-dom";
 import imgActu1 from "../media/actu1.png";
-import imgActu4 from "../media/actu4.jpg";
-import imgActu5 from "../media/actu5.png";
-import imgActu6 from "../media/actu6.png";
-import imgActu7 from "../media/actu7.png";
+import imgActu4 from "../media/actu2.jpg";
+import imgActu5 from "../media/actu3.png";
+import imgActu6 from "../media/actu4.png";
+import imgActu7 from "../media/actu5.png";
+import {DataStore, Predicates, SortDirection} from "@aws-amplify/datastore";
+import {News} from "../models";
+import {Storage} from "aws-amplify";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -108,14 +111,19 @@ export default function ZoomActu() {
     const history = useHistory()
     const classes = useStyles()
     const actuDefault = {
-        idN: 0,
-        titre: '',
-        img: '',
-        auteur: '',
+        id: 0,
+        idNews: 0,
+        title: '',
+        titleFR: '',
+        author: '',
         date: '',
-        preview: '',
+        content: '',
+        contentFR: '',
         type: '',
+        typeFR: '',
         nbComments: '',
+        img: '',
+        imgFile: '',
     }
     const [actu, setActu] = React.useState(actuDefault);
     const updateActu = (data) => {
@@ -125,16 +133,45 @@ export default function ZoomActu() {
     const updateError = (data) => {
         setError(data);
     }
+    const [actualite, setActualite] = useState(actuDefault);
     React.useEffect(() => {
-        if (actu === actuDefault) {
-            if (actus.filter(e => e.idN === parseInt(id.id)).length > 0) {
-                updateActu(actus.filter(e => e.idN === parseInt(id.id))[0])
-                updateError(false)
-            } else {
-                updateError(true)
-            }
+        const err = fetchNews(id.id)
+    },[]);
+    async function fetchNews(id) {
+        console.log(id);
+        let news = await DataStore.query(News, c => c.idNews("eq", parseInt(id)));
+        if(news.length<=0)
+        {
+            updateError(true)
+            return false;
         }
-    })
+        let newsItem = news[0];
+        let a = {
+            id: newsItem.id,
+            idNews: newsItem.idNews,
+            title: newsItem.title,
+            titleFR: newsItem.titleFR,
+            author: newsItem.author,
+            date: newsItem.date,
+            content: newsItem.content,
+            contentFR: newsItem.contentFR,
+            type: newsItem.type,
+            typeFR: newsItem.typeFR,
+            nbComments: newsItem.nbComments,
+            img: newsItem.img,
+            imgFile: '',
+        };
+        const imgList = await Storage.list(a.img + '.');
+        if (a.img !== '' && a.img !== null && imgList.length > 0) {
+            const image = await Storage.get(imgList[0].key);
+            a.imgFile = image;
+        } else {
+            a.imgFile = null;
+        }
+        setActualite(a);
+        return true;
+    }
+
     return (
         <Fragment>
             {error ?
@@ -145,16 +182,16 @@ export default function ZoomActu() {
                     <Box className={classes.box1Content}>
                         <Grid container item direction={'column'}>
                             <Grid item>
-                                <img src={actu.img}/>
+                                <img src={actualite.imgFile}/>
                             </Grid>
                             <Grid item>
-                                <Typography variant={'h1'}>{actu.titre}</Typography>
+                                <Typography variant={'h1'}>{actualite.titleFR}</Typography>
                             </Grid>
                             <Grid item>
-                                <Typography variant={'h5'}>{actu.date}</Typography>
+                                <Typography variant={'h5'}>{actualite.date}</Typography>
                             </Grid>
                             <Grid item>
-                                <Typography variant={'h5'}>{actu.preview}</Typography>
+                                <Typography variant={'h5'}>{actualite.contentFR}</Typography>
                             </Grid>
 
                         </Grid>

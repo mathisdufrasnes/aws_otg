@@ -1,8 +1,8 @@
 type News @model @auth(rules: [{allow: public}]) {
   id: ID!
+  idNews: Int!
   title: String!
   titleFR: String!
-  img: String
   author: String!
   date: AWSDate
   content: String
@@ -10,5 +10,6 @@ type News @model @auth(rules: [{allow: public}]) {
   type: String
   typeFR: String
   nbComments: Int
+  img: String
 }
  

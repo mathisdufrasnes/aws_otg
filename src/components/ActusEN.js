@@ -1,9 +1,9 @@
 import React, {Fragment, useEffect, useState} from "react"
 import imgActu1 from '../media/actu1.png'
-import imgActu4 from '../media/actu4.jpg'
-import imgActu5 from '../media/actu5.png'
-import imgActu6 from '../media/actu6.png'
-import imgActu7 from '../media/actu7.png'
+import imgActu4 from '../media/actu2.jpg'
+import imgActu5 from '../media/actu3.png'
+import imgActu6 from '../media/actu4.png'
+import imgActu7 from '../media/actu5.png'
 import FeedOutlinedIcon from '@mui/icons-material/FeedOutlined';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined';
@@ -35,6 +35,9 @@ import {TimelineOppositeContent} from "@mui/lab";
 import {Route, Switch, useHistory, useLocation} from "react-router-dom";
 import ZoomActu from "./ZoomActu";
 import Accueil from "./Accueil";
+import {DataStore, Predicates, SortDirection} from "@aws-amplify/datastore";
+import {News} from "../models";
+import {Storage} from "aws-amplify";
 
 const actu1 = {
     id: 1,
@@ -239,6 +242,44 @@ const useStyles = makeStyles((theme) => ({
 export default function Actus() {
     const [offset, setOffset] = useState(0);
 
+    const [actualites, setActualites] = useState([]);
+    useEffect(() => {
+        fetchNews();
+    }, []);
+
+    async function fetchNews() {
+        let news = await DataStore.query(News,Predicates.ALL, {
+            sort: s => s.idNews(SortDirection.ASCENDING)});
+        let actus=[];
+        await Promise.all(news.map(async newsItem => {
+            let actu = {
+                id: newsItem.id,
+                idNews: newsItem.idNews,
+                title: newsItem.title,
+                titleFR: newsItem.titleFR,
+                author: newsItem.author,
+                date: newsItem.date,
+                content: newsItem.content,
+                contentFR: newsItem.contentFR,
+                type: newsItem.type,
+                typeFR: newsItem.typeFR,
+                nbComments: newsItem.nbComments,
+                img: newsItem.img,
+                imgFile: '',
+            };
+            const imgList = await Storage.list(actu.img+'.');
+            if (actu.img!== '' && actu.img!== null && imgList.length>0) {
+                const image = await Storage.get(imgList[0].key);
+                actu.imgFile = image;
+
+            }
+            else{
+                actu.imgFile = null;
+            }
+            actus.push(actu);
+        }))
+        setActualites(actus);
+    }
 
     const history = useHistory();
     const location = useLocation();
@@ -397,62 +438,64 @@ export default function Actus() {
             <Box className={classes.box1}>
                 <Grid className={classes.box1Content} container spacing={3}>
                     <Timeline position="alternate">
-                        {actus.slice(0).reverse().map(actu =>
-                            <TimelineItem>
-                                <TimelineOppositeContent className={classes.TLOppositeContent}>
-                                    <Typography variant={'h4'} color={'primary'}
-                                                style={{marginLeft: '10%', marginRight: '10%'}}>
-                                        {actu.date.charAt(0).toUpperCase() + actu.date.slice(1)}
-                                    </Typography>
-                                </TimelineOppositeContent>
-                                <TimelineSeparator>
-                                    <TimelineConnector className={classes.TLSep}/>
-                                    <TimelineDot/>
-                                    <TimelineConnector className={classes.TLSep}/>
-                                </TimelineSeparator>
-                                <TimelineContent className={classes.TLContent}>
-                                    <Card className={classes.card} onClick={() => history.push('/en/actus/' + actu.id)}>
-                                        <CardContent className={classes.cardContent}>
+                        {actualites.sort((a,b) => (a.idNews > b.idNews) ? -1 : ((b.idNews > a.idNews) ? 1 : 0)).map(actualite=>
+                            <Fragment>
+                                <TimelineItem>
+                                    <TimelineOppositeContent className={classes.TLOppositeContent}>
+                                        <Typography variant={'h4'} color={'primary'}
+                                                    style={{marginLeft: '10%', marginRight: '10%'}}>
+                                            {actualite.date}
+                                        </Typography>
+                                    </TimelineOppositeContent>
+                                    <TimelineSeparator>
+                                        <TimelineConnector className={classes.TLSep}/>
+                                        <TimelineDot/>
+                                        <TimelineConnector className={classes.TLSep}/>
+                                    </TimelineSeparator>
+                                    <TimelineContent className={classes.TLContent}>
+                                        <Card className={classes.card} onClick={() => history.push('/actus/' + actualite.idNews)}>
+                                            <CardContent className={classes.cardContent}>
 
-                                            <img src={actu.img} className={classes.cardImg}/>
+                                                {<img src={actualite.imgFile} className={classes.cardImg}/>}
 
-                                            <Typography className={classes.titleText}>
-                                                {actu.titre}
-                                            </Typography>
-                                            <Grid item container direction={'row'} spacing={1}>
-                                                <Grid item>
-                                                    <Typography className={classes.contentText}>
-                                                        by
-                                                    </Typography>
+                                                <Typography className={classes.titleText}>
+                                                    {actualite.title}
+                                                </Typography>
+                                                <Grid item container direction={'row'} spacing={1}>
+                                                    <Grid item>
+                                                        <Typography className={classes.contentText}>
+                                                            by
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item>
+                                                        <Typography className={classes.authorText}>
+                                                            {actualite.author}
+                                                        </Typography>
+                                                    </Grid>
                                                 </Grid>
-                                                <Grid item>
-                                                    <Typography className={classes.authorText}>
-                                                        {actu.auteur}
-                                                    </Typography>
-                                                </Grid>
-                                            </Grid>
-                                            <Typography className={classes.contentText}>
-                                                {actu.preview}
-                                            </Typography>
-                                        </CardContent>
-                                        <CardActions className={classes.cardActions}>
-                                            {(actu.type === '' || actu.type === null) ? '' : (
-                                                <Button>
-                                                    <CategoryIcon type={actu.type}/>
-                                                    <Typography className={classes.contentText}>{actu.type}</Typography>
-                                                </Button>)
-                                            }
-                                            {(actu.nbComments === '' || actu.nbComments === null) ? '' : (
-                                                <Button>
-                                                    <CommentOutlinedIcon className={classes.typeIcon}/>
-                                                    <Typography
-                                                        className={classes.contentText}>{actu.nbComments}</Typography>
-                                                </Button>)
-                                            }
-                                        </CardActions>
-                                    </Card>
-                                </TimelineContent>
-                            </TimelineItem>
+                                                <Typography className={classes.contentText}>
+                                                    {actualite.content}
+                                                </Typography>
+                                            </CardContent>
+                                            <CardActions className={classes.cardActions}>
+                                                {(actualite.type === '' || actualite.type === null) ? '' : (
+                                                    <Button>
+                                                        <CategoryIcon type={actualite.type}/>
+                                                        <Typography className={classes.contentText}>{actualite.type}</Typography>
+                                                    </Button>)
+                                                }
+                                                {(actualite.nbComments === '' || actualite.nbComments === null) ? '' : (
+                                                    <Button>
+                                                        <CommentOutlinedIcon className={classes.typeIcon}/>
+                                                        <Typography
+                                                            className={classes.contentText}>{actualite.nbComments}</Typography>
+                                                    </Button>)
+                                                }
+                                            </CardActions>
+                                        </Card>
+                                    </TimelineContent>
+                                </TimelineItem>
+                            </Fragment>
                         )}
                     </Timeline>
                 </Grid>

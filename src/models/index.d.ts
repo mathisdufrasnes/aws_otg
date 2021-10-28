@@ -10,9 +10,9 @@ type NewsMetaData = {
 
 export declare class News {
   readonly id: string;
+  readonly idNews: number;
   readonly title: string;
   readonly titleFR: string;
-  readonly img?: string;
   readonly author: string;
   readonly date?: string;
   readonly content?: string;
@@ -20,6 +20,7 @@ export declare class News {
   readonly type?: string;
   readonly typeFR?: string;
   readonly nbComments?: number;
+  readonly img?: string;
   readonly createdAt?: string;
   readonly updatedAt?: string;
   constructor(init: ModelInit<News, NewsMetaData>);

@@ -1,16 +1,18 @@
 import React, {Fragment, useEffect, useState} from "react"
 import imgActu1 from '../media/actu1.png'
-import imgActu4 from '../media/actu4.jpg'
-import imgActu5 from '../media/actu5.png'
-import imgActu6 from '../media/actu6.png'
-import imgActu7 from '../media/actu7.png'
+import imgActu4 from '../media/actu2.jpg'
+import imgActu5 from '../media/actu3.png'
+import imgActu6 from '../media/actu4.png'
+import imgActu7 from '../media/actu5.png'
 import FeedOutlinedIcon from '@mui/icons-material/FeedOutlined';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import AddCommentOutlinedIcon from '@mui/icons-material/AddCommentOutlined';
 import CommentOutlinedIcon from '@mui/icons-material/CommentOutlined';
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
-import { DataStore } from '@aws-amplify/datastore';
+import { DataStore , Predicates, SortDirection} from '@aws-amplify/datastore';
+import { API , Storage} from 'aws-amplify';
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 import { News } from '../models';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
 import TimelineConnector from '@mui/lab/TimelineConnector';
@@ -241,15 +243,43 @@ const useStyles = makeStyles((theme) => ({
 export default function Actus() {
     const [offset, setOffset] = useState(0);
 
-
     const [actualites, setActualites] = useState([]);
     useEffect(() => {
         fetchNews();
     }, []);
 
     async function fetchNews() {
-        const news = await DataStore.query(News);
-        setActualites(news);
+        let news = await DataStore.query(News,Predicates.ALL, {
+            sort: s => s.idNews(SortDirection.ASCENDING)});
+        let actus=[];
+        await Promise.all(news.map(async newsItem => {
+            let actu = {
+                id: newsItem.id,
+                idNews: newsItem.idNews,
+                title: newsItem.title,
+                titleFR: newsItem.titleFR,
+                author: newsItem.author,
+                date: newsItem.date,
+                content: newsItem.content,
+                contentFR: newsItem.contentFR,
+                type: newsItem.type,
+                typeFR: newsItem.typeFR,
+                nbComments: newsItem.nbComments,
+                img: newsItem.img,
+                imgFile: '',
+            };
+            const imgList = await Storage.list(actu.img+'.');
+            if (actu.img!== '' && actu.img!== null && imgList.length>0) {
+                const image = await Storage.get(imgList[0].key);
+                actu.imgFile = image;
+
+            }
+            else{
+                actu.imgFile = null;
+            }
+            actus.push(actu);
+        }))
+        setActualites(actus);
     }
 
 
@@ -410,12 +440,14 @@ export default function Actus() {
             <Box className={classes.box1}>
                 <Grid className={classes.box1Content} container spacing={3}>
                     <Timeline position="alternate">
-                        {actus.slice(0).reverse().map(actu =>
+
+                        {actualites.sort((a,b) => (a.idNews > b.idNews) ? -1 : ((b.idNews > a.idNews) ? 1 : 0)).map(actualite=>
+                            <Fragment>
                             <TimelineItem>
                                 <TimelineOppositeContent className={classes.TLOppositeContent}>
                                     <Typography variant={'h4'} color={'primary'}
                                                 style={{marginLeft: '10%', marginRight: '10%'}}>
-                                        {actu.date.charAt(0).toUpperCase() + actu.date.slice(1)}
+                                        {actualite.date}
                                     </Typography>
                                 </TimelineOppositeContent>
                                 <TimelineSeparator>
@@ -424,13 +456,13 @@ export default function Actus() {
                                     <TimelineConnector className={classes.TLSep}/>
                                 </TimelineSeparator>
                                 <TimelineContent className={classes.TLContent}>
-                                    <Card className={classes.card} onClick={() => history.push('/actus/' + actu.id)}>
+                                    <Card className={classes.card} onClick={() => history.push('/actus/' + actualite.idNews)}>
                                         <CardContent className={classes.cardContent}>
 
-                                            <img src={actu.img} className={classes.cardImg}/>
+                                            {<img src={actualite.imgFile} className={classes.cardImg}/>}
 
                                             <Typography className={classes.titleText}>
-                                                {actu.titre}
+                                                {actualite.titleFR}
                                             </Typography>
                                             <Grid item container direction={'row'} spacing={1}>
                                                 <Grid item>
@@ -440,32 +472,33 @@ export default function Actus() {
                                                 </Grid>
                                                 <Grid item>
                                                     <Typography className={classes.authorText}>
-                                                        {actu.auteur}
+                                                        {actualite.author}
                                                     </Typography>
                                                 </Grid>
                                             </Grid>
                                             <Typography className={classes.contentText}>
-                                                {actu.preview}
+                                                {actualite.contentFR}
                                             </Typography>
                                         </CardContent>
                                         <CardActions className={classes.cardActions}>
-                                            {(actu.type === '' || actu.type === null) ? '' : (
+                                            {(actualite.typeFR === '' || actualite.typeFR === null) ? '' : (
                                                 <Button>
-                                                    <CategoryIcon type={actu.type}/>
-                                                    <Typography className={classes.contentText}>{actu.type}</Typography>
+                                                    <CategoryIcon type={actualite.typeFR}/>
+                                                    <Typography className={classes.contentText}>{actualite.typeFR}</Typography>
                                                 </Button>)
                                             }
-                                            {(actu.nbComments === '' || actu.nbComments === null) ? '' : (
+                                            {(actualite.nbComments === '' || actualite.nbComments === null) ? '' : (
                                                 <Button>
                                                     <CommentOutlinedIcon className={classes.typeIcon}/>
                                                     <Typography
-                                                        className={classes.contentText}>{actu.nbComments}</Typography>
+                                                        className={classes.contentText}>{actualite.nbComments}</Typography>
                                                 </Button>)
                                             }
                                         </CardActions>
                                     </Card>
                                 </TimelineContent>
                             </TimelineItem>
+                            </Fragment>
                         )}
                     </Timeline>
                 </Grid>
@@ -473,3 +506,4 @@ export default function Actus() {
         </Fragment>
     );
 }
+
