@@ -28,7 +28,7 @@ import {ThemeProvider, createTheme} from '@material-ui/core'
 import ScrollButton from "./ScrollTop";
 import ZoomActu from "./ZoomActu";
 import ZoomActuEN from "./ZoomActuEN"
-
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 export const customTheme = createTheme({
     palette: {
         type: 'light',
@@ -144,7 +144,7 @@ styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css
 document.head.appendChild(styleLink);
 
 
-export default function MainPage() {
+function MainPage() {
 
 
     const dispatch = useDispatch()
@@ -325,9 +325,11 @@ export default function MainPage() {
                 </div>
             </div>
             <ScrollButton />
+            <AmplifySignOut/>
+
         </ThemeProvider>
     );
 
 }
 
-
+export default withAuthenticator(MainPage)
