@@ -1,6 +1,6 @@
 {
     "identityPoolName": "awsotg220fce98_identitypool_220fce98",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "awsotg220fce98",
     "userPoolName": "awsotg220fce98_userpool_220fce98",
     "autoVerifiedAttributes": [
