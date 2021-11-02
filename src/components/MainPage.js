@@ -144,7 +144,7 @@ styleLink.href = "https://cdn.jsdelivr.net/npm/semantic-ui/dist/semantic.min.css
 document.head.appendChild(styleLink);
 
 
-function MainPage() {
+export default function MainPage() {
 
 
     const dispatch = useDispatch()
@@ -325,11 +325,8 @@ function MainPage() {
                 </div>
             </div>
             <ScrollButton />
-            <AmplifySignOut/>
 
         </ThemeProvider>
     );
 
 }
-
-export default withAuthenticator(MainPage)
