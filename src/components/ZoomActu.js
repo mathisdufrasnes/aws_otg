@@ -85,9 +85,8 @@ export default function ZoomActu() {
             img: newsItem.img,
             imgFile: '',
         };
-        const imgList = await Storage.list(a.img + '.');
         if (a.img !== '' && a.img !== null) {
-            const image = await Storage.get(imgList[0].key);
+            const image = await Storage.get(a.img);
             a.imgFile = image;
         } else {
             a.imgFile = null;
