@@ -319,7 +319,7 @@ export default function Accueil() {
                         </Grid>
                         <Grid item>
                             <Typography variant={'h5'} color={'primary'}>
-                                Prix : 3000 $ + tx
+                                Prix : 3500 $ + tx
                             </Typography>
                         </Grid>
                         <Grid item>

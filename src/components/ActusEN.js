@@ -267,11 +267,9 @@ export default function Actus() {
                 img: newsItem.img,
                 imgFile: '',
             };
-            const imgList = await Storage.list(actu.img+'.');
-            if (actu.img!== '' && actu.img!== null && imgList.length>0) {
-                const image = await Storage.get(imgList[0].key);
+            if (actu.img!== '' && actu.img!== null) {
+                const image = await Storage.get(actu.img);
                 actu.imgFile = image;
-
             }
             else{
                 actu.imgFile = null;

@@ -267,11 +267,10 @@ export default function Actus() {
                 img: newsItem.img,
                 imgFile: '',
             };
-            const imgList = await Storage.list(actu.img+'.');
-            if (actu.img!== '' && actu.img!== null && imgList.length>0) {
-                const image = await Storage.get(imgList[0].key);
+            if (actu.img!== '' && actu.img!== null) {
+                const image = await Storage.get(actu.img);
+                console.log(actu.img + ' '+image);
                 actu.imgFile = image;
-
             }
             else{
                 actu.imgFile = null;
@@ -311,6 +310,12 @@ export default function Actus() {
             setValue2(newValue);
         }
     };
+
+    const formatDate = (date) => {
+        const month = mois[parseInt(date.substring(5,7))-1]
+        return date.substring(8,10) + ' '+ month.toString() + ' '+ date.substring(0,4);
+    };
+
     const handleChangeCateg = (event) => {
         const {
             target: { value },
@@ -446,7 +451,7 @@ export default function Actus() {
                                 <TimelineOppositeContent className={classes.TLOppositeContent}>
                                     <Typography variant={'h4'} color={'primary'}
                                                 style={{marginLeft: '10%', marginRight: '10%'}}>
-                                        {actualite.date}
+                                        {formatDate(actualite.date)}
                                     </Typography>
                                 </TimelineOppositeContent>
                                 <TimelineSeparator>
