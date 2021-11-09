@@ -226,7 +226,7 @@ export default function MainPage() {
                                                 <Grid item xs={2}>
                                                     <Button className={classes.menuButton}
                                                             onClick={() => history.push('/equipe')}>
-                                                        <Typography className={classes.menuText}>Notre Equipe</Typography>
+                                                        <Typography className={classes.menuText}>Notre équipe</Typography>
                                                     </Button>
                                                 </Grid>
 
@@ -280,7 +280,7 @@ export default function MainPage() {
                                                 <Grid item xs={2}>
                                                     <Button className={classes.menuButton}
                                                             onClick={() => history.push('/en/equipe')}>
-                                                        <Typography className={classes.menuText}>Our Team</Typography>
+                                                        <Typography className={classes.menuText}>Our team</Typography>
                                                     </Button>
                                                 </Grid>
 

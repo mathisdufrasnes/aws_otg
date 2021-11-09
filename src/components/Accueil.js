@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
         {
             backgroundColor: '#f2f2f2',
             minHeight: "100vh",
-            padding: "7% 10% 7% 10%",
+            padding: "7% 10% 7% 5%",
         },
     box4:
         {
@@ -85,13 +85,13 @@ const useStyles = makeStyles((theme) => ({
             backgroundSize: "cover",
             minHeight: "100vh",
             boxShadow: 'inset 0 0 0 1000px rgba(0,0,0,.4)',
-            padding: "7% 10% 7% 10%"
+            padding: "7% 5% 7% 5%"
         },
     box7:
         {
             minHeight: "90vh",
             backgroundColor: "#242424",
-            padding: "3.5% 3.5% 3.5% 3.5%"
+            padding: "3.5% 5% 3.5% 5%"
         },
 
     boxNewsletter:
@@ -117,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
     },
     boxContent:
         {
-            padding: "5% 10% 10% 15%"
+            padding: "5% 15% 10% 15%"
         },
     boxContentApplication:
         {
