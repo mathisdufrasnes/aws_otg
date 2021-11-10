@@ -28,7 +28,8 @@ import {ThemeProvider, createTheme} from '@material-ui/core'
 import ScrollButton from "./ScrollTop";
 import ZoomActu from "./ZoomActu";
 import ZoomActuEN from "./ZoomActuEN"
-import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
+import {withAuthenticator, AmplifySignOut} from '@aws-amplify/ui-react';
+
 export const customTheme = createTheme({
     palette: {
         type: 'light',
@@ -135,6 +136,16 @@ const useStyles = makeStyles((customTheme) => ({
     },
     offset: {
         marginTop: "10vw"
+    },
+    menuButton: {
+        borderRadius: '10px',
+    },
+    dropdownLanguage: {},
+    navbar: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: "center"
     }
 }));
 
@@ -154,7 +165,7 @@ export default function MainPage() {
 
     //const lang = useSelector(state => state.lang.value)
     const lang = location.pathname.includes('/en') ? 'gb' : 'fr'
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(setLang(lang));
     })
     const toggleLanguage = (language) => {
@@ -177,8 +188,8 @@ export default function MainPage() {
 
 
     const languageOptions = [
-        {key: 'fr', value: 'fr', flag: 'fr'},
-        {key: 'gb', value: 'gb', flag: 'gb'},
+        {key: 'fr', value: 'fr', flag: 'fr', text:'FR'},
+        {key: 'gb', value: 'gb', flag: 'gb', text:'EN'},
     ]
     const DropdownExampleSearchSelection = () => (
         <Menu compact>
@@ -201,49 +212,76 @@ export default function MainPage() {
                             <Fragment>
                                 <AppBar position="fixed">
                                     <Toolbar>
-                                        <Grid container alignItems="center">
-                                            <Grid item xs>
+                                        <Grid container direction={'row'} className={classes.navbar}>
+                                            <Grid item>
                                                 <Button className={classes.menuButton} aria-label="Home" size="large"
                                                         edge="start"
-                                                        color="inherit" onClick={() => history.push('/')}>
+                                                        color="inherit" onClick={() => {
+                                                    history.push('/');
+                                                    history.go(0);
+                                                    window.scrollTo(0, 0);
+                                                }}>
                                                     <img className={classes.logo} src={logo}></img>
                                                 </Button>
                                             </Grid>
-                                            <Grid item container xs={9} spacing={2}>
-                                                <Grid item xs={2}>
-                                                    <Button className={classes.menuButton}
-                                                            onClick={() => history.push('/')}>
-                                                        <Typography className={classes.menuText}>Accueil</Typography>
-                                                    </Button>
-                                                </Grid>
-
-                                                <Grid item xs={2}>
-                                                    <Button className={classes.menuButton}
-                                                            onClick={() => history.push('/actus')}>
-                                                        <Typography className={classes.menuText}>Actualité</Typography>
-                                                    </Button>
-                                                </Grid>
-                                                <Grid item xs={2}>
-                                                    <Button className={classes.menuButton}
-                                                            onClick={() => history.push('/equipe')}>
-                                                        <Typography className={classes.menuText}>Notre équipe</Typography>
-                                                    </Button>
-                                                </Grid>
-
-                                                <Grid item xs={2}>
-                                                    <Button className={classes.menuButton}
-                                                            onClick={() => history.push('/FAQ')}>
-                                                        <Typography className={classes.menuText}>F.A.Q.</Typography>
-                                                    </Button>
-                                                </Grid>
-                                                <Grid item xs={2}>
-                                                    <Button className={classes.menuButton}
-                                                            onClick={() => history.push('/precommande')}>
-                                                        <Typography className={classes.menuText}>Précommande</Typography>
-                                                    </Button>
-                                                </Grid>
+                                            <Grid item>
+                                                <Button className={classes.menuButton}
+                                                        color={location.pathname==='/' ? 'primary' : ''}
+                                                        onClick={() => {
+                                                            history.push('/');
+                                                            history.go(0);
+                                                            window.scrollTo(0, 0);
+                                                        }}>
+                                                    <Typography className={classes.menuText}>Accueil</Typography>
+                                                </Button>
                                             </Grid>
-                                            <Grid item xs={1}>
+
+                                            <Grid item>
+                                                <Button className={classes.menuButton}
+                                                        color={location.pathname.includes('/actus') ? 'primary' : ''}
+                                                        onClick={() => {
+                                                            history.push('/actus');
+                                                            history.go(0);
+                                                            window.scrollTo(0, 0);
+                                                        }}>
+                                                    <Typography className={classes.menuText}>Actualité</Typography>
+                                                </Button>
+                                            </Grid>
+                                            <Grid item>
+                                                <Button className={classes.menuButton}
+                                                        color={location.pathname.includes('/equipe') ? 'primary' : ''}
+                                                        onClick={() => {
+                                                            history.push('/equipe');
+                                                            history.go(0);
+                                                            window.scrollTo(0, 0);
+                                                        }}>
+                                                    <Typography className={classes.menuText}>Notre équipe</Typography>
+                                                </Button>
+                                            </Grid>
+
+                                            <Grid item>
+                                                <Button className={classes.menuButton}
+                                                        color={location.pathname.includes('/FAQ') ? 'primary' : ''}
+                                                        onClick={() => {
+                                                            history.push('/FAQ');
+                                                            history.go(0);
+                                                            window.scrollTo(0, 0);
+                                                        }}>
+                                                    <Typography className={classes.menuText}>F.A.Q.</Typography>
+                                                </Button>
+                                            </Grid>
+                                            <Grid item>
+                                                <Button className={classes.menuButton}
+                                                        color={location.pathname.includes('/precommande') ? 'primary' : ''}
+                                                        onClick={() => {
+                                                            history.push('/precommande');
+                                                            history.go(0);
+                                                            window.scrollTo(0, 0);
+                                                        }}>
+                                                    <Typography className={classes.menuText}>Précommande</Typography>
+                                                </Button>
+                                            </Grid>
+                                            <Grid item className={classes.dropdownLanguage}>
                                                 <DropdownExampleSearchSelection/>
                                             </Grid>
                                         </Grid>
@@ -255,49 +293,76 @@ export default function MainPage() {
                             <Fragment>
                                 <AppBar position="fixed" color="white">
                                     <Toolbar>
-                                        <Grid container alignItems="center">
-                                            <Grid item xs>
+                                        <Grid container direction={'row'} className={classes.navbar}>
+                                            <Grid item>
                                                 <Button className={classes.menuButton} aria-label="Home" size="large"
                                                         edge="start"
-                                                        color="inherit" onClick={() => history.push('/en')}>
+                                                        color="inherit" onClick={() => {
+                                                    history.push('/en');
+                                                    history.go(0);
+                                                    window.scrollTo(0, 0);
+                                                }}>
                                                     <img className={classes.logo} src={logo}></img>
                                                 </Button>
                                             </Grid>
-                                            <Grid item container xs={9} spacing={2}>
-                                                <Grid item xs={2}>
-                                                    <Button className={classes.menuButton}
-                                                            onClick={() => history.push('/en')}>
-                                                        <Typography className={classes.menuText}>Home</Typography>
-                                                    </Button>
-                                                </Grid>
-
-                                                <Grid item xs={2}>
-                                                    <Button className={classes.menuButton}
-                                                            onClick={() => history.push('/en/actus')}>
-                                                        <Typography className={classes.menuText}>News</Typography>
-                                                    </Button>
-                                                </Grid>
-                                                <Grid item xs={2}>
-                                                    <Button className={classes.menuButton}
-                                                            onClick={() => history.push('/en/equipe')}>
-                                                        <Typography className={classes.menuText}>Our team</Typography>
-                                                    </Button>
-                                                </Grid>
-
-                                                <Grid item xs={2}>
-                                                    <Button className={classes.menuButton}
-                                                            onClick={() => history.push('/en/FAQ')}>
-                                                        <Typography className={classes.menuText}>F.A.Q.</Typography>
-                                                    </Button>
-                                                </Grid>
-                                                <Grid item xs={2}>
-                                                    <Button className={classes.menuButton}
-                                                            onClick={() => history.push('/en/precommande')}>
-                                                        <Typography className={classes.menuText}>Preorder</Typography>
-                                                    </Button>
-                                                </Grid>
+                                            <Grid item>
+                                                <Button className={classes.menuButton}
+                                                        color={location.pathname==='/en' ? 'primary' : ''}
+                                                        onClick={() => {
+                                                            history.push('/en');
+                                                            history.go(0);
+                                                            window.scrollTo(0, 0);
+                                                        }}>
+                                                    <Typography className={classes.menuText}>Home</Typography>
+                                                </Button>
                                             </Grid>
-                                            <Grid item xs={1}>
+
+                                            <Grid item>
+                                                <Button className={classes.menuButton}
+                                                        color={location.pathname.includes('/en/actus') ? 'primary' : ''}
+                                                        onClick={() => {
+                                                            history.push('/en/actus');
+                                                            history.go(0);
+                                                            window.scrollTo(0, 0);
+                                                        }}>
+                                                    <Typography className={classes.menuText}>News</Typography>
+                                                </Button>
+                                            </Grid>
+                                            <Grid item>
+                                                <Button className={classes.menuButton}
+                                                        color={location.pathname.includes('/en/equipe') ? 'primary' : ''}
+                                                        onClick={() => {
+                                                            history.push('/en/equipe');
+                                                            history.go(0);
+                                                            window.scrollTo(0, 0);
+                                                        }}>
+                                                    <Typography className={classes.menuText}>Our team</Typography>
+                                                </Button>
+                                            </Grid>
+
+                                            <Grid item>
+                                                <Button className={classes.menuButton}
+                                                        color={location.pathname.includes('/en/FAQ') ? 'primary' : ''}
+                                                        onClick={() => {
+                                                            history.push('/en/FAQ');
+                                                            history.go(0);
+                                                            window.scrollTo(0, 0);
+                                                        }}>
+                                                    <Typography className={classes.menuText}>F.A.Q.</Typography>
+                                                </Button>
+                                            </Grid>
+                                            <Grid item>
+                                                <Button className={classes.menuButton}
+                                                        color={location.pathname.includes('/en/precommande') ? 'primary' : ''}
+                                                        onClick={() => {
+                                                            history.push('/en/precommande');
+                                                            history.go(0);
+                                                            window.scrollTo(0, 0);
+                                                        }}>
+                                                    <Typography className={classes.menuText}>Preorder</Typography>
+                                                </Button>
+                                            </Grid>
+                                            <Grid item className={classes.dropdownLanguage}>
                                                 <DropdownExampleSearchSelection/>
                                             </Grid>
                                         </Grid>
@@ -320,11 +385,14 @@ export default function MainPage() {
                         <Route path="/en/equipe" exact component={EquipeEN}/>
                         <Route path="/en/FAQ" exact component={FAQ_EN}/>
                         <Route path="/en/precommande" exact component={PrecommandeEN}/>
-                        <Route render={() => <div><h1>404: page not found</h1><h1>404: page not found</h1><h1>404: page not found</h1><h1>404: page not found</h1><h1>404: page not found</h1><h1>404: page not found</h1><h1>404: page not found</h1></div>}/>
+                        <Route
+                            render={() => <div><h1>404: page not found</h1><h1>404: page not found</h1><h1>404: page not
+                                found</h1><h1>404: page not found</h1><h1>404: page not found</h1><h1>404: page not
+                                found</h1><h1>404: page not found</h1></div>}/>
                     </Switch>
                 </div>
             </div>
-            <ScrollButton />
+            <ScrollButton/>
 
         </ThemeProvider>
     );

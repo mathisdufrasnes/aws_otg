@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
         {
             backgroundColor: '#f2f2f2',
             minHeight: "100vh",
-            padding: "7% 10% 7% 10%",
+            padding: "7% 10% 7% 5%",
         },
     box4:
         {
@@ -85,13 +85,13 @@ const useStyles = makeStyles((theme) => ({
             backgroundSize: "cover",
             minHeight: "100vh",
             boxShadow: 'inset 0 0 0 1000px rgba(0,0,0,.4)',
-            padding: "7% 10% 7% 10%"
+            padding: "7% 5% 7% 5%"
         },
     box7:
         {
             minHeight: "90vh",
             backgroundColor: "#242424",
-            padding: "3.5% 3.5% 3.5% 3.5%"
+            padding: "3.5% 5% 3.5% 5%"
         },
 
     boxNewsletter:
@@ -117,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
     },
     boxContent:
         {
-            padding: "5% 10% 10% 15%"
+            padding: "5% 5% 10% 5%"
         },
     boxContentApplication:
         {
@@ -318,7 +318,7 @@ export default function AccueilEN() {
                                 label="Preorder now"
                                 clickable
                                 color={'primary'}
-                                onClick={() => history.push('/precommande')}
+                                onClick={() => {history.push('/en/precommande');window.scrollTo(0, 0);}}
                             />
                         </Grid>
                         <Grid item>
@@ -418,16 +418,19 @@ export default function AccueilEN() {
                                 An integrated application to track the impact of each workout
                             </Typography>
                         </Grid>
-                        <Grid item className={classes.spacingApp}>
-                            <Typography variant={'body1'}>
-                                Our integrated application allows real-time monitoring of electricity generation and
-                                training statistics. Thanks to our gamification concept, a user can also track his
-                                ranking and take on personalized challenges.
-                            </Typography>
-                            <Typography variant={'body1'}>
-                                Grâce à notre concept de gamification, l’utilisateur peut également suivre son
-                                classement et relever des défis personnalisés.
-                            </Typography>
+                        <Grid item container direction={'column'} className={classes.spacingApp} spacing={3}>
+                            <Grid item>
+                                <Typography variant={'body1'}>
+                                    Our integrated application allows real-time monitoring of electricity generation and
+                                    training statistics.
+                                </Typography>
+                            </Grid>
+                            <Grid item>
+                                <Typography variant={'body1'}>
+                                    Thanks to our gamification concept, a user can also track his
+                                    ranking and take on personalized challenges.
+                                </Typography>
+                            </Grid>
                         </Grid>
                         <Grid item className={classes.spacingApp}>
                             <Button color={'primary'} variant={'contained'} className={classes.bigButton}
@@ -528,7 +531,9 @@ export default function AccueilEN() {
                             </Grid>
                             <Grid item>
                                 <Typography variant={'body2'} color={'secondary'}>
-                                    Become an athlete of change and join the Off The Grid movement by subscribing to our newsletter! This way, you will be the first to receive all the company's offers and news.
+                                    Become an athlete of change and join the Off The Grid movement by subscribing to our
+                                    newsletter! This way, you will be the first to receive all the company's offers and
+                                    news.
 
 
                                 </Typography>
@@ -542,7 +547,7 @@ export default function AccueilEN() {
                             <Grid item>
                                 <Typography variant={'body2'} color={'secondary'}>
                                     Send us a mail at <Link className={classes.mailLink}
-                                                         href={'mailto:info@getoffthegrid.ca'}>info@getoffthegrid.ca</Link>
+                                                            href={'mailto:info@getoffthegrid.ca'}>info@getoffthegrid.ca</Link>
                                 </Typography>
                             </Grid>
 
@@ -586,7 +591,7 @@ export default function AccueilEN() {
                                                         <TextField
                                                             placeholder={'Enter your first name'}
                                                             id="outlined-required"
-
+                                                            label={'First name'}
                                                             variant="outlined"
                                                             fullWidth
                                                             value={field.value}
@@ -632,7 +637,8 @@ export default function AccueilEN() {
                                             <Grid item>
                                                 <FormControl component="fieldset"
                                                              error={errors.Source || errors.AutreSource}>
-                                                    <FormLabel component="legend" required>Where did you first hear from us?</FormLabel>
+                                                    <FormLabel component="legend" required>Where did you first hear from
+                                                        us?</FormLabel>
                                                     <Controller
                                                         render={({field}) => (
                                                             <RadioGroup

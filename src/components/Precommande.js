@@ -115,7 +115,7 @@ export default function Precommande() {
                                 la suite!</Typography>
                         </Grid>
                         <Grid item>
-                            <Typography variant={'h5'} color={'primary'}>Prix : 3 000 $ + tx</Typography>
+                            <Typography variant={'h5'} color={'primary'}>Prix : 3 500 $ + tx</Typography>
                         </Grid>
                         <Grid item>
                             <img src={bikeImg} className={classes.bikeImg} onClick={handleOpenPopup}/>

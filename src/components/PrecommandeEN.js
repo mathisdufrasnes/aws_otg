@@ -110,7 +110,7 @@ export default function PrecommandeEN() {
                             <Typography variant={'body2'} color={'secondary'}>To preorder a spin bike from Off The Grid, fill out this form and let us know how many bikes you're interested in. A member of our team will then gladly contact you!</Typography>
                         </Grid>
                         <Grid item>
-                            <Typography variant={'h5'} color={'primary'}>Price : 3 000 $ + tx</Typography>
+                            <Typography variant={'h5'} color={'primary'}>Price : 3 500 $ + tx</Typography>
                         </Grid>
                         <Grid item>
                             <img src={bikeImg} className={classes.bikeImg} onClick={handleOpenPopup}/>

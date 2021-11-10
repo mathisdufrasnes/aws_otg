@@ -9,6 +9,10 @@ import equi2 from '../media/equi2.png'
 import equi3 from '../media/equi3.png'
 import equi4 from '../media/equi4.png'
 import equi5 from '../media/equi5.png'
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import AccordionDetails from "@mui/material/AccordionDetails";
 
 const useStyles = makeStyles((theme) => ({
     root:
@@ -39,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#000000',
         width: '35%',
         borderRadius: '15px',
-        marginBottom:'5%'
+        marginBottom:'5%',
     },
     box2: {
         backgroundColor: "#ffffff",
@@ -49,14 +53,19 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
     },
     box2Content: {
-        width: '40vw',
+        width: '60vw',
         display: "flex",
         justifyContent: 'center',
-        alignItems: 'center',
     },
     textFAQ: {
         fontSize: 15,
         fontFamily: '"Montserrat-Regular"',
+        textAlign: 'Left',
+        lineHeight: 3,
+    },
+    titleFAQ: {
+        fontSize: 18,
+        fontFamily: '"Montserrat-Medium"',
         textAlign: 'center',
         lineHeight: 3,
     },
@@ -114,75 +123,75 @@ export default function FAQ_EN() {
                 </Grid>
             </Box>
             <Box className={classes.box2}>
-                <Grid container className={classes.box2Content} direction={'column'} spacing={8}>
+                <Grid container direction={'column'} className={classes.box2Content} spacing={8}>
                     <Grid item container direction={'row'} justifyContent={'center'}>
                         <Grid item style={{width: '50vw'}}>
                             <Typography variant={'h1'} align={'center'}>
-                                Frequently Asked Questions
+                                Frequently asked questions
                             </Typography>
                         </Grid>
                     </Grid>
-                    <Divider classes={{root: classes.customDiv}}/>
-                    <Grid item container direction={'row'} justifyContent={'center'} spacing={'2'}>
-                        <Grid item>
-                            <Typography variant={'h6'} align={'center'}>
-                                How does the bike work?
-                            </Typography>
-                        </Grid>
-                        <Grid item>
+                    <Divider classes={{root: classes.customDiv}} style={{alignSelf:'center'}}/>
+                    <Accordion>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                        >
+                            <Typography className={classes.titleFAQ}> How does the bike work?</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
                             <Typography className={classes.textFAQ}>
                                 It's easy! Just do your usual workout on your Off The Grid spinning bike, and the energy generated is transformed into electricity. Thanks to our technology, it is then synchronized and distributed directly into your electrical grid. Our solution is turnkey: no need for a battery or a certificate from Hydro-Québec. Simply plug the bike into a standard wall outlet (120V) and you're good to go!
                             </Typography>
-                        </Grid>
-                    </Grid>
-                    <Grid item container direction={'row'} justifyContent={'center'} spacing={'2'}>
-                        <Grid item>
-                            <Typography variant={'h6'} align={'center'}>
-                                How much energy can I generate on a bike?
-                            </Typography>
-                        </Grid>
-                        <Grid item>
+                        </AccordionDetails>
+                    </Accordion>
+                    <Accordion>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                        >
+                            <Typography className={classes.titleFAQ}>How much energy can I generate on a bike?</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
                             <Typography className={classes.textFAQ}>
                                 On average, an individual will produce about 150Wh during a one-hour workout. However, our bike can generate a maximum of 250Wh of energy.
                             </Typography>
-                        </Grid>
-                    </Grid>
-                    <Grid item container direction={'row'} justifyContent={'center'} spacing={'2'}>
-                        <Grid item>
-                            <Typography variant={'h6'} align={'center'}>
-                                Are your products made in Québec?
-                            </Typography>
-                        </Grid>
-                        <Grid item>
+                        </AccordionDetails>
+                    </Accordion>
+                    <Accordion>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                        >
+                            <Typography className={classes.titleFAQ}>Are your products made in Québec?</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
                             <Typography className={classes.textFAQ}>
                                 In our desire to offer the most eco-friendly product possible, we always prioritize local partnerships. Our product was designed, manufactured and assembled in Quebec with mechanical, electrical and computing partners from our home province!
                             </Typography>
-                        </Grid>
-                    </Grid>
-                    <Grid item container direction={'row'} justifyContent={'center'} spacing={'2'}>
-                        <Grid item>
-                            <Typography variant={'h6'} align={'center'}>
-                                Can I charge my cellphone while working out?
-                            </Typography>
-                        </Grid>
-                        <Grid item>
+                        </AccordionDetails>
+                    </Accordion>
+                    <Accordion>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                        >
+                            <Typography className={classes.titleFAQ}>Can I charge my cellphone while working out?</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
                             <Typography className={classes.textFAQ}>
                                 Yes, the basic charging cables (USB Type-C, Micro-USB and iPhone) are included. Just plug in your device and pedal!
                             </Typography>
-                        </Grid>
-                    </Grid>
-                    <Grid item container direction={'row'} justifyContent={'center'} spacing={'2'}>
-                        <Grid item>
-                            <Typography variant={'h6'} align={'center'}>
-                                Can I see my training history?
-                            </Typography>
-                        </Grid>
-                        <Grid item>
+                        </AccordionDetails>
+                    </Accordion>
+                    <Accordion>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                        >
+                            <Typography className={classes.titleFAQ}>Can I see my training history?</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
                             <Typography className={classes.textFAQ}>
                                 Of course! Our bike connects to your wireless Internet network and transmits your training data to a database. You can then access it for free to see your performance, the amount of energy produced and ecological equivalents in real-time!
                             </Typography>
-                        </Grid>
-                    </Grid>
+                        </AccordionDetails>
+                    </Accordion>
                 </Grid>
             </Box>
             <Box className={classes.box3}>

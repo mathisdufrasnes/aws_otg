@@ -10,7 +10,27 @@ import {Storage} from "aws-amplify";
 import FeedOutlinedIcon from "@mui/icons-material/FeedOutlined";
 import {blue} from '@mui/material/colors';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-
+import {
+    EmailShareButton,
+    FacebookShareButton,
+    HatenaShareButton,
+    InstapaperShareButton,
+    LineShareButton,
+    LinkedinShareButton,
+    LivejournalShareButton,
+    MailruShareButton,
+    OKShareButton,
+    PinterestShareButton,
+    PocketShareButton,
+    RedditShareButton,
+    TelegramShareButton,
+    TumblrShareButton,
+    TwitterShareButton,
+    ViberShareButton,
+    VKShareButton,
+    WhatsappShareButton,
+    WorkplaceShareButton
+} from "react-share";
 const useStyles = makeStyles((theme) => ({
     root:
         {
@@ -189,7 +209,6 @@ export default function ZoomActu() {
     React.useEffect(() => {
         const err = fetchNews(id.id);
         fetchRecentNews();
-        console.log(actusRecentes);
     }, []);
 
     async function fetchRecentNews() {
@@ -216,7 +235,6 @@ export default function ZoomActu() {
             };
             if (actu.img !== '' && actu.img !== null) {
                 const image = await Storage.get(actu.img);
-                console.log(actu.img + ' ' + image);
                 actu.imgFile = image;
             } else {
                 actu.imgFile = null;
@@ -227,7 +245,6 @@ export default function ZoomActu() {
     }
 
     async function fetchNews(id) {
-        console.log(id);
         let news = await DataStore.query(News, c => c.idNews("eq", parseInt(id)));
         if (news.length <= 0 || (id.match(/^[0-9]+$/)) === null) {
             updateError(true)
@@ -351,6 +368,7 @@ export default function ZoomActu() {
                                         }
                                     </Typography>
                                 </Grid>
+                                <EmailShareButton url={'http://localhost:3000/en/actus'} />
                             </Grid>
                         </Box>
                         <Box className={classes.box3}>

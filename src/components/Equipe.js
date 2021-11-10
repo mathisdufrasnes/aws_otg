@@ -6,6 +6,7 @@ import img1 from '../media/Profil_Charles.jpg'
 import img2 from '../media/Profil_Seb.png'
 import img3 from '../media/Profil_Simon.png'
 import img4 from '../media/Profil_Audrey.png'
+import img5 from '../media/Profil_Mathis.png'
 
 import p1 from '../media/p1.png'
 import p2 from '../media/p2.gif'
@@ -164,12 +165,20 @@ export default function Equipe() {
         linkedin: 'https://www.linkedin.com/in/simon-tousignant-60abb595/',
     }
     const profil4 = {
-        prenom: 'Audrey',
-        nom: 'Freeman-Gravel',
-        poste: 'Représentante Commerciale',
-        formation: 'ASP Vente-conseil et Représentation',
+        prenom: 'Boies ',
+        nom: 'Florence',
+        poste: 'Responsable Logistique & Chaîne d\'approvisionnement',
+        formation: 'xxxxxxxxxxxxxxxxxxxxxxxxxxx',
         img: img4,
-        linkedin: 'https://www.linkedin.com/in/audrey-freeman-gravel/',
+        linkedin: 'https://www.linkedin.com/in/florence-boies-69a746211/',
+    }
+    const profil5 = {
+        prenom: 'Mathis',
+        nom: 'Dufrasnes',
+        poste: 'Développeur Web Full Stack',
+        formation: 'Double Maîtrise en Technologies de l\'Information',
+        img: img5,
+        linkedin: 'https://www.linkedin.com/in/mathis-dufrasnes/',
     }
     const comite1 = {
         prenom: 'Nathalie',
@@ -199,7 +208,7 @@ export default function Equipe() {
         organisation: 'Anges Québec',
         img: c4,
     }
-    const profils = [profil1, profil2, profil3, profil4]
+    const profils = [profil1, profil2, profil3, profil4, profil5]
     const partenaires=[p1,p2,p3,p4,p5,p6]
     const comiteAdviseurs = [comite1,comite2,comite3,comite4]
     return (

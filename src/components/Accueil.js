@@ -117,7 +117,7 @@ const useStyles = makeStyles((theme) => ({
     },
     boxContent:
         {
-            padding: "5% 15% 10% 15%"
+            padding: "5% 5% 10% 5%"
         },
     boxContentApplication:
         {
@@ -327,7 +327,7 @@ export default function Accueil() {
                                 label="Précommander"
                                 clickable
                                 color={'primary'}
-                                onClick={() => history.push('/precommande')}
+                                onClick={() => {history.push('/precommande');window.scrollTo(0, 0);}}
                             />
                         </Grid>
                         <Grid item>
@@ -427,15 +427,19 @@ export default function Accueil() {
                                 Une application intégrée pour suivre l'impact de chaque entraînement
                             </Typography>
                         </Grid>
-                        <Grid item className={classes.spacingApp}>
-                            <Typography variant={'body1'}>
-                                Notre application intégrée permet un suivi en temps réel de la production d’électricité
-                                et des statistiques d’entraînement.
-                            </Typography>
-                            <Typography variant={'body1'}>
-                                Grâce à notre concept de gamification, l’utilisateur peut également suivre son
-                                classement et relever des défis personnalisés.
-                            </Typography>
+                        <Grid item container direction={'column'} className={classes.spacingApp} spacing={3}>
+                            <Grid item>
+                                <Typography variant={'body1'}>
+                                    Notre application intégrée permet un suivi en temps réel de la production d’électricité
+                                    et des statistiques d’entraînement.
+                                </Typography>
+                            </Grid>
+                            <Grid item>
+                                <Typography variant={'body1'}>
+                                    Grâce à notre concept de gamification, l’utilisateur peut également suivre son
+                                    classement et relever des défis personnalisés.
+                                </Typography>
+                            </Grid>
                         </Grid>
                         <Grid item className={classes.spacingApp}>
                             <Button color={'primary'} variant={'contained'} className={classes.bigButton}
@@ -594,7 +598,7 @@ export default function Accueil() {
                                                         <TextField
                                                             placeholder={'Entrez votre prénom'}
                                                             id="outlined-required"
-
+                                                            label="Prénom"
                                                             variant="outlined"
                                                             fullWidth
                                                             value={field.value}
@@ -616,7 +620,7 @@ export default function Accueil() {
                                                         <TextField
                                                             placeholder={'Entrez votre adresse courriel'}
                                                             id="outlined-required"
-                                                            label="Adresse Courriel"
+                                                            label="Adresse courriel"
                                                             variant="outlined"
                                                             fullWidth
                                                             value={field.value}
